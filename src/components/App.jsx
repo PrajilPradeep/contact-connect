@@ -1,11 +1,10 @@
 import { useState } from "react";
-
+import "../styles/App.css";
+import Header from "./Header.jsx";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>contact-connect</h1>
+      <Header />
     </>
   );
 }
