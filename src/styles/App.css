@@ -6,3 +6,11 @@
 .main {
   margin-top: 5rem;
 }
+
+i.icon {
+  float: right;
+  cursor: pointer;
+  font-size: 18px;
+  color: red;
+  margin-top: 7px;
+}
