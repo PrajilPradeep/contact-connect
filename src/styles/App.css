@@ -13,3 +13,12 @@ i.icon {
   font-size: 18px;
   color: red;
 }
+
+.item {
+  padding: 15px 0px !important;
+}
+
+.right {
+  float: right;
+  transform: translateY(-25%);
+}

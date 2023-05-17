@@ -4,6 +4,7 @@ import Header from "./Header.jsx";
 import AddContact from "./AddContact.jsx";
 import ContactList from "./ContactList.jsx";
 import { v4 as uuidv4 } from "uuid";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [contactList, setContactList] = useState([]);
@@ -36,9 +37,25 @@ function App() {
   };
   return (
     <div className="ui container">
-      <Header />
-      <AddContact addContact={addContactHandler} />
-      <ContactList contactList={contactList} deleteContact={deleteContact} />
+      <Router>
+        <Header />
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <ContactList
+                contactList={contactList}
+                deleteContact={deleteContact}
+              />
+            }
+          />
+          <Route
+            path="/add"
+            element={<AddContact addContact={addContactHandler} />}
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
