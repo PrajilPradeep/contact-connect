@@ -1,6 +1,6 @@
 import user from "../images/user.png";
-function ContactCard({ contact }) {
-  const { name, email } = contact;
+function ContactCard({ contact, deleteContact }) {
+  const { name, email, id } = contact;
 
   return (
     <div className="item">
@@ -12,6 +12,7 @@ function ContactCard({ contact }) {
       <i
         className="ui trash alternate outline icon"
         style={{ marginTop: "7px" }}
+        onClick={() => deleteContact(id)}
       />
     </div>
   );

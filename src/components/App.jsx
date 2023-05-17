@@ -7,11 +7,11 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [contactList, setContactList] = useState([]);
-  console.log(uuidv4());
+  const LOCAL_STORAGE_KEY = "contactList";
   const addContactHandler = (contact) => {
     const updatedContactList = [...contactList, { id: uuidv4(), ...contact }];
     window.localStorage.setItem(
-      "contactList",
+      LOCAL_STORAGE_KEY,
       JSON.stringify(updatedContactList)
     );
     setContactList(updatedContactList);
@@ -25,11 +25,20 @@ function App() {
       setContactList(contactsFromLocalStorage);
     }
   }, []);
+
+  const deleteContact = (id) => {
+    const newContactList = contactList.filter((contact) => contact.id !== id);
+    setContactList(newContactList);
+    window.localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(newContactList)
+    );
+  };
   return (
     <>
       <Header />
       <AddContact addContact={addContactHandler} />
-      <ContactList contactList={contactList} />
+      <ContactList contactList={contactList} deleteContact={deleteContact} />
     </>
   );
 }
