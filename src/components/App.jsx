@@ -35,11 +35,11 @@ function App() {
     );
   };
   return (
-    <>
+    <div className="ui container">
       <Header />
       <AddContact addContact={addContactHandler} />
       <ContactList contactList={contactList} deleteContact={deleteContact} />
-    </>
+    </div>
   );
 }
 
