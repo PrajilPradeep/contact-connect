@@ -5,6 +5,7 @@ import AddContact from "./AddContact.jsx";
 import ContactList from "./ContactList.jsx";
 import { v4 as uuidv4 } from "uuid";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ContactDetails from "./ContactDetails";
 
 function App() {
   const [contactList, setContactList] = useState([]);
@@ -54,6 +55,7 @@ function App() {
             path="/add"
             element={<AddContact addContact={addContactHandler} />}
           />
+          <Route path="/contact/:id" element={<ContactDetails />} />
         </Routes>
       </Router>
     </div>
