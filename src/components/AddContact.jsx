@@ -1,10 +1,12 @@
 import "../styles/App.css";
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddContact({ addContact }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ function AddContact({ addContact }) {
     addContact({ name, email });
     setName("");
     setEmail("");
+    navigate("/");
   };
 
   return (
