@@ -7,7 +7,7 @@ function ContactCard({ contact, deleteContact }) {
     <div className="item">
       <img src={user} alt="user_avatar" className="ui image avatar" />
       <div className="content">
-        <Link to={`/contact/${id}`}>
+        <Link to={`/contact/${id}`} state={{ contact: contact }}>
           <div className="header">{name}</div>
           <div>{email}</div>
         </Link>
