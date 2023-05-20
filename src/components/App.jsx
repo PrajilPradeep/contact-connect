@@ -16,14 +16,13 @@ function App() {
     return response.data;
   };
 
-  // const LOCAL_STORAGE_KEY = "contactList";
-  const addContactHandler = (contact) => {
-    const updatedContactList = [...contactList, { id: uuidv4(), ...contact }];
-    // window.localStorage.setItem(
-    //   LOCAL_STORAGE_KEY,
-    //   JSON.stringify(updatedContactList)
-    // );
-    // setContactList(updatedContactList);
+  const addContactHandler = async (contact) => {
+    const request = {
+      id: uuidv4(),
+      ...contact,
+    };
+    const response = await api.post("/contacts", request);
+    setContactList([...contactList, response.data]);
   };
 
   useEffect(() => {
