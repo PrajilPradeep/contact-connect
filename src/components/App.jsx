@@ -6,26 +6,33 @@ import ContactList from "./ContactList.jsx";
 import { v4 as uuidv4 } from "uuid";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ContactDetails from "./ContactDetails";
+import api from "../api/contacts";
 
 function App() {
   const [contactList, setContactList] = useState([]);
-  const LOCAL_STORAGE_KEY = "contactList";
+
+  const retrieveContacts = async () => {
+    const response = await api.get("/contacts");
+    return response.data;
+  };
+
+  // const LOCAL_STORAGE_KEY = "contactList";
   const addContactHandler = (contact) => {
     const updatedContactList = [...contactList, { id: uuidv4(), ...contact }];
-    window.localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify(updatedContactList)
-    );
-    setContactList(updatedContactList);
+    // window.localStorage.setItem(
+    //   LOCAL_STORAGE_KEY,
+    //   JSON.stringify(updatedContactList)
+    // );
+    // setContactList(updatedContactList);
   };
 
   useEffect(() => {
-    const contactsFromLocalStorage = JSON.parse(
-      localStorage.getItem("contactList")
-    );
-    if (contactsFromLocalStorage) {
-      setContactList(contactsFromLocalStorage);
-    }
+    const getAllContact = async () => {
+      const allContacts = await retrieveContacts();
+      if (allContacts) setContactList(allContacts);
+    };
+
+    getAllContact();
   }, []);
 
   const deleteContact = (id) => {
