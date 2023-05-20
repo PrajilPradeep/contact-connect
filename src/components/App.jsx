@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ContactDetails from "./ContactDetails";
 import api from "../api/contacts";
+import EditContact from "./EditContact";
 
 function App() {
   const [contactList, setContactList] = useState([]);
@@ -23,6 +24,16 @@ function App() {
     };
     const response = await api.post("/contacts", request);
     setContactList([...contactList, response.data]);
+  };
+
+  const editContactHandler = async (updatedContact) => {
+    const { id } = updatedContact;
+    const response = await api.put(`/contacts/${id}`, updatedContact);
+    setContactList(
+      contactList.map((contact) => {
+        return contact.id === id ? { ...response.data } : contact;
+      })
+    );
   };
 
   useEffect(() => {
@@ -60,6 +71,10 @@ function App() {
             element={<AddContact addContact={addContactHandler} />}
           />
           <Route path="/contact/:id" element={<ContactDetails />} />
+          <Route
+            path="/edit"
+            element={<EditContact editContact={editContactHandler} />}
+          />
         </Routes>
       </Router>
     </div>

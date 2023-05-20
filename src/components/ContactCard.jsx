@@ -17,6 +17,12 @@ function ContactCard({ contact, deleteContact }) {
         style={{ marginTop: "7px" }}
         onClick={() => deleteContact(id)}
       />
+      <Link to="/edit" state={{ contact: contact }}>
+        <i
+          className="ui edit alternate outline icon"
+          style={{ marginTop: "7px", marginRight: "20px", color: "blue" }}
+        />
+      </Link>
     </div>
   );
 }
