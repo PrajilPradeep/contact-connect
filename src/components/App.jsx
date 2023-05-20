@@ -34,14 +34,12 @@ function App() {
     getAllContact();
   }, []);
 
-  const deleteContact = (id) => {
+  const deleteContact = async (id) => {
+    await api.delete(`/contacts/${id}`);
     const newContactList = contactList.filter((contact) => contact.id !== id);
     setContactList(newContactList);
-    window.localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify(newContactList)
-    );
   };
+
   return (
     <div className="ui container">
       <Router>
