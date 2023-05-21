@@ -26,3 +26,7 @@ i.icon {
 .center-div {
   text-align: center;
 }
+
+.ui.search .input {
+  width: 100%;
+}
