@@ -5,7 +5,6 @@ import AddContact from "./AddContact.jsx";
 import ContactList from "./ContactList.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ContactDetails from "./ContactDetails";
-import api from "../api/contacts";
 import EditContact from "./EditContact";
 import { ContactsCrudContextProvider } from "../context/ContactsCrudContext";
 
@@ -13,16 +12,6 @@ function App() {
   const [contactList, setContactList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-
-  const editContactHandler = async (updatedContact) => {
-    const { id } = updatedContact;
-    const response = await api.put(`/contacts/${id}`, updatedContact);
-    setContactList(
-      contactList.map((contact) => {
-        return contact.id === id ? { ...response.data } : contact;
-      })
-    );
-  };
 
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm);
@@ -60,10 +49,7 @@ function App() {
             />
             <Route path="/add" element={<AddContact />} />
             <Route path="/contact/:id" element={<ContactDetails />} />
-            <Route
-              path="/edit"
-              element={<EditContact editContact={editContactHandler} />}
-            />
+            <Route path="/edit" element={<EditContact />} />
           </Routes>
         </ContactsCrudContextProvider>
       </Router>
