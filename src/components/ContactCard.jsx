@@ -1,8 +1,14 @@
 import user from "../images/user.png";
 import { Link } from "react-router-dom";
+import { useContactsCrud } from "../context/ContactsCrudContext";
 
-function ContactCard({ contact, deleteContact }) {
+function ContactCard({ contact }) {
+  const { removeContactHandler } = useContactsCrud();
   const { name, email, id } = contact;
+
+  const deleteContact = (id) => {
+    removeContactHandler(id);
+  };
   return (
     <div className="item">
       <img src={user} alt="user_avatar" className="ui image avatar" />

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useContactsCrud } from "../context/ContactsCrudContext";
 
-function ContactList({ deleteContact, searchTerm, searchKeyword }) {
+function ContactList({ searchTerm, searchKeyword }) {
   const { contactList, retrieveContacts } = useContactsCrud();
 
   useEffect(() => {
@@ -13,13 +13,7 @@ function ContactList({ deleteContact, searchTerm, searchKeyword }) {
   const inputEl = useRef("");
 
   const renderContactList = contactList.map((contact) => {
-    return (
-      <ContactCard
-        contact={contact}
-        key={contact.id}
-        deleteContact={deleteContact}
-      />
-    );
+    return <ContactCard contact={contact} key={contact.id} />;
   });
 
   const getSearchTerm = () => {

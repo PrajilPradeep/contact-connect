@@ -12,9 +12,17 @@ export function ContactsCrudContextProvider({ children }) {
     if (response.data) setContactList(response.data);
   };
 
+  //Delete contact
+  const removeContactHandler = async (id) => {
+    await api.delete(`/contacts/${id}`);
+    const newContactList = contactList.filter((contact) => contact.id !== id);
+    setContactList(newContactList);
+  };
+
   const value = {
     contactList,
     retrieveContacts,
+    removeContactHandler,
   };
   return (
     <ContactsCrudContext.Provider value={value}>

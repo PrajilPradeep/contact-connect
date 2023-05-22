@@ -34,12 +34,6 @@ function App() {
     );
   };
 
-  const deleteContact = async (id) => {
-    await api.delete(`/contacts/${id}`);
-    const newContactList = contactList.filter((contact) => contact.id !== id);
-    setContactList(newContactList);
-  };
-
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm);
     if (searchTerm !== "") {
@@ -69,7 +63,6 @@ function App() {
                   contactList={
                     searchTerm.length >= 1 ? searchResult : contactList
                   }
-                  deleteContact={deleteContact}
                   searchTerm={searchTerm}
                   searchKeyword={searchHandler}
                 />
