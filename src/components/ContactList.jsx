@@ -1,13 +1,17 @@
 import ContactCard from "./ContactCard";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
-function ContactList({
-  contactList,
-  deleteContact,
-  searchTerm,
-  searchKeyword,
-}) {
+import { useEffect, useRef } from "react";
+import { useContactsCrud } from "../context/ContactsCrudContext";
+
+function ContactList({ deleteContact, searchTerm, searchKeyword }) {
+  const { contactList, retrieveContacts } = useContactsCrud();
+
+  useEffect(() => {
+    retrieveContacts();
+  }, []);
+
   const inputEl = useRef("");
+
   const renderContactList = contactList.map((contact) => {
     return (
       <ContactCard

@@ -8,15 +8,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ContactDetails from "./ContactDetails";
 import api from "../api/contacts";
 import EditContact from "./EditContact";
+import { ContactsCrudContextProvider } from "../context/ContactsCrudContext";
 
 function App() {
   const [contactList, setContactList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const retrieveContacts = async () => {
-    const response = await api.get("/contacts");
-    return response.data;
-  };
 
   const addContactHandler = async (contact) => {
     const request = {
@@ -36,15 +33,6 @@ function App() {
       })
     );
   };
-
-  useEffect(() => {
-    const getAllContact = async () => {
-      const allContacts = await retrieveContacts();
-      if (allContacts) setContactList(allContacts);
-    };
-
-    getAllContact();
-  }, []);
 
   const deleteContact = async (id) => {
     await api.delete(`/contacts/${id}`);
@@ -71,31 +59,33 @@ function App() {
     <div className="ui container">
       <Router>
         <Header />
-        <Routes>
-          <Route
-            path="/"
-            exact
-            element={
-              <ContactList
-                contactList={
-                  searchTerm.length >= 1 ? searchResult : contactList
-                }
-                deleteContact={deleteContact}
-                searchTerm={searchTerm}
-                searchKeyword={searchHandler}
-              />
-            }
-          />
-          <Route
-            path="/add"
-            element={<AddContact addContact={addContactHandler} />}
-          />
-          <Route path="/contact/:id" element={<ContactDetails />} />
-          <Route
-            path="/edit"
-            element={<EditContact editContact={editContactHandler} />}
-          />
-        </Routes>
+        <ContactsCrudContextProvider>
+          <Routes>
+            <Route
+              path="/"
+              exact
+              element={
+                <ContactList
+                  contactList={
+                    searchTerm.length >= 1 ? searchResult : contactList
+                  }
+                  deleteContact={deleteContact}
+                  searchTerm={searchTerm}
+                  searchKeyword={searchHandler}
+                />
+              }
+            />
+            <Route
+              path="/add"
+              element={<AddContact addContact={addContactHandler} />}
+            />
+            <Route path="/contact/:id" element={<ContactDetails />} />
+            <Route
+              path="/edit"
+              element={<EditContact editContact={editContactHandler} />}
+            />
+          </Routes>
+        </ContactsCrudContextProvider>
       </Router>
     </div>
   );
