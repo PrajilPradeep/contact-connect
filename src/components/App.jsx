@@ -3,7 +3,6 @@ import "../styles/App.css";
 import Header from "./Header.jsx";
 import AddContact from "./AddContact.jsx";
 import ContactList from "./ContactList.jsx";
-import { v4 as uuidv4 } from "uuid";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ContactDetails from "./ContactDetails";
 import api from "../api/contacts";
@@ -14,15 +13,6 @@ function App() {
   const [contactList, setContactList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-
-  const addContactHandler = async (contact) => {
-    const request = {
-      id: uuidv4(),
-      ...contact,
-    };
-    const response = await api.post("/contacts", request);
-    setContactList([...contactList, response.data]);
-  };
 
   const editContactHandler = async (updatedContact) => {
     const { id } = updatedContact;
@@ -68,10 +58,7 @@ function App() {
                 />
               }
             />
-            <Route
-              path="/add"
-              element={<AddContact addContact={addContactHandler} />}
-            />
+            <Route path="/add" element={<AddContact />} />
             <Route path="/contact/:id" element={<ContactDetails />} />
             <Route
               path="/edit"

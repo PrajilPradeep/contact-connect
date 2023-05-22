@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import api from "../api/contacts";
+import { v4 as uuidv4 } from "uuid";
 
 const ContactsCrudContext = createContext();
 
@@ -10,6 +11,16 @@ export function ContactsCrudContextProvider({ children }) {
   const retrieveContacts = async () => {
     const response = await api.get("/contacts");
     if (response.data) setContactList(response.data);
+  };
+
+  //Add contact
+  const addContactHandler = async (contact) => {
+    const request = {
+      id: uuidv4(),
+      ...contact,
+    };
+    const response = await api.post("/contacts", request);
+    setContactList([...contactList, response.data]);
   };
 
   //Delete contact
@@ -23,6 +34,7 @@ export function ContactsCrudContextProvider({ children }) {
     contactList,
     retrieveContacts,
     removeContactHandler,
+    addContactHandler,
   };
   return (
     <ContactsCrudContext.Provider value={value}>
