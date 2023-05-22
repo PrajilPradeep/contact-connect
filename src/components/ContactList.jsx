@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useContactsCrud } from "../context/ContactsCrudContext";
 
-function ContactList({ searchTerm, searchKeyword }) {
-  const { contactList, retrieveContacts } = useContactsCrud();
+function ContactList() {
+  const {
+    contactList,
+    retrieveContacts,
+    searchHandler,
+    searchTerm,
+    searchResult,
+  } = useContactsCrud();
 
   useEffect(() => {
     retrieveContacts();
@@ -12,12 +18,14 @@ function ContactList({ searchTerm, searchKeyword }) {
 
   const inputEl = useRef("");
 
-  const renderContactList = contactList.map((contact) => {
+  const contacts = searchTerm.length >= 1 ? searchResult : contactList;
+
+  const renderContactList = contacts.map((contact) => {
     return <ContactCard contact={contact} key={contact.id} />;
   });
 
   const getSearchTerm = () => {
-    searchKeyword(inputEl.current.value);
+    searchHandler(inputEl.current.value);
   };
   return (
     <div className="main">
@@ -42,7 +50,7 @@ function ContactList({ searchTerm, searchKeyword }) {
       </div>
 
       <div className="ui celled list">
-        {contactList.length >= 1 ? renderContactList : "No Contacts Available"}
+        {contacts.length >= 1 ? renderContactList : "No Contacts Available"}
       </div>
     </div>
   );
